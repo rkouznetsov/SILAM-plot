@@ -36,22 +36,16 @@ bbox="spatial=bb&north=%s&west=%s&east=%s&south=%s"%(lats[1],lons[0],lons[1],lat
 # list of variables and levels according to MKD AQ index
 varlist="cnc_PM2_5 cnc_PM10 cnc_O3_gas cnc_NO2_gas cnc_SO2_gas cnc_CO_gas".split() 
 #varlist="cnc_PM2_5".split() 
-levs=dict(cnc_PM2_5="3 5 7.5 15 30 55 110", 
-          cnc_PM10="3 6 12 25 50 90 180", 
-          cnc_O3_gas="10 20 40 60 120 180 240", 
-          cnc_NO2_gas="10 20 40 60 120 180 240", 
-          cnc_SO2_gas="7 15 30 50 100 350 500",
-          cnc_CO_gas="750 1500 3000 5000 7500 10000 20000",
+lev_nam_col=dict(
+          cnc_PM2_5=("1 2 5 10 20 50 100 200 500",             "PM2_5",  'def_lowwhite'), 
+          cnc_PM10=("3 6 15 30 60 150 300 600 1500 3000",                      "PM10",  'def_lowwhite'), 
+          cnc_O3_gas=("10 20 40 60 80 100 120 140 160 180 200",                "O3", 'def_lowwhite'),
+          cnc_NO2_gas=(".1 .2 .5 1 2 5 10 20 50 100",               "NO2", "def_lowblue"),
+          cnc_SO2_gas=(".1 .2 .5 1 2 5 10 20 50 100",                "SO2", "def_lowblue"),
+          cnc_CO_gas=("15 25 40 70 150 250 400 700 1500 2500",  "CO", 'def_lowwhite'),
+          BLH = ("10 20 40 80 150 250 400 700 1500 2500",  "BLH", 'def_lowgrey'),
           )
-		  
-#Names for output
-shortvar=dict(cnc_PM2_5="PM2_5", 
-          cnc_PM10="PM10", 
-          cnc_O3_gas="O3", 
-          cnc_NO2_gas="NO2", 
-          cnc_SO2_gas="SO2",
-          cnc_CO_gas="CO",
-          )
+
 # area to be plotted: Macedonian domain
 #bbox="spatial=bb&north=43.5&west=19&east=24.5&south=40"
 # descriptor of the user requesting the data, mail of the contact person in case someone changes on FMI side
@@ -134,8 +128,7 @@ gradsbin=os.getenv("gradsnc", "/usr/bin/grads")
 gradsp=subp.Popen((gradsbin+" -b  -l").split(), shell=False, bufsize=100000, stdin=subp.PIPE, stdout=subp.PIPE)
 
 grads_scr="""
-
-set gxout grfill
+set gxout shaded
 set mpdset mpd_irantaj
 ## draw shoreline
 set mpt 1 1 1 1
@@ -155,18 +148,20 @@ set mproj scaled
 *set xlab off
 *set ylab off
 *set frame off
-set rbcols 11 5 13 10 3 7 8 9
-#set parea 0 11 0 8.5
+*set rbcols 11 5 13 10 3 7 8 9
+*set parea 0 11 0 8.5
 sdfopen %(ncfile)s
 """%dict(ncfile=ncfile)
-for it in range((tend-tstart).days*24 + 1):
-   #print(t)
-   plottime = tstart + dt.timedelta(hours=it)
-   gradstime=plottime.strftime("%H:%MZ%d%b%Y")
-   date=plottime.strftime("%d%b%Y")
-   hour=plottime.strftime("%H")
-   for v in varlist:
-     outname=picdir+shortvar[v]+"_surf_%(t)03d.png"%dict(t=it)
+for v in varlist:
+  #print(t)
+  clev,snam2,colors = lev_nam_col[v]
+  grads_scr += "run colors.gs %s\n"%(colors,)
+  for it in range((tend-tstart).days*24 + 1):
+     plottime = tstart + dt.timedelta(hours=it)
+     gradstime=plottime.strftime("%H:%MZ%d%b%Y")
+     date=plottime.strftime("%d%b%Y")
+     hour=plottime.strftime("%H")
+     outname=picdir+snam2+"_surf_%03d.png"%(it,)
      #print(outname)
      grads_scr += """
                 set time %(t)s
@@ -174,11 +169,11 @@ for it in range((tend-tstart).days*24 + 1):
                 set grads off
                 d  %(v)s
                 labels_%(domain)s
-                cbar
+                cbarn
                 draw title %(vS)s concentration (ug/m3), %(date)s hour: %(hour)s 
                 printim %(outname)s x800 y600 white
                 clear
-              """%dict(t=gradstime, v=v, vS=shortvar[v], date=date , hour=hour, outname=outname, levs=levs[v], domain=domain)
+              """%dict(t=gradstime, v=v, vS=snam2, date=date , hour=hour, outname=outname, levs=clev, domain=domain)
 grads_scr += 'quit\r\n'
 
 

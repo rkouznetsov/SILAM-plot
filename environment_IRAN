@@ -4,3 +4,4 @@ export latrange="24.,40."
 export suitename="IRAN"
 
 export OUTPUT_DIR=${scriptdir}/output-${suitename}
+domainname=Iran

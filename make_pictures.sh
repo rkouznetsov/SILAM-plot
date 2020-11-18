@@ -51,8 +51,9 @@ if $publish; then
     done
 
     #deploy animation if not yet...
-    rsync -av $scriptdir/www/*.html .
     if [ !  -d Napit ]; then
+     rsync -av $scriptdir/www/*.html .
+     sed -i "s/XXXXXXX/${domainname}/g" toc.html
      tar -xvf  $scriptdir/www/Napit.tar
     fi
 

@@ -9,7 +9,7 @@ export fcdate=`date -u -d "3 hours" +%Y%m%d`
 export globfcdate=`date -u -d "- 2 days $fcdate" +%Y%m%d`
 export maxhours=48
 
-
+export gradsnc=`which grads`
 
 export urlpref="https://silam.fmi.fi/thredds/ncss/grid/silam_glob_v5_7_1/runs/silam_glob_v5_7_1_RUN_"
 
@@ -19,3 +19,5 @@ export publish=true
 export PUTLOGOCMD="composite  -geometry  +110+475  $scriptdir/fmi-logo-60x30a.png"
 # Special logo for aqi and pollen index pictures
 export PUTLOGOCMDINDEX="$PUTLOGOCMD"
+
+export outsuff=""
