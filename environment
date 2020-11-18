@@ -3,28 +3,14 @@
 export scriptdir=`pwd`
 
 
-#export METEO_DIR=${scriptdir}/meteo
-export OUTPUT_DIR=${scriptdir}/output
-#export BOUNDARY_DIR=${scriptdir}/SILAM-bnd
 
-
-#export silam_binary=${scriptdir}/silam-model/bin/silam_v5_6.gnumpi # MPI run
-#export silam_binary=${scriptdir}/../silam-model/bin/silam_v5_7.gnu   # serial run
-#export silam_ini=${scriptdir}/../silam-model/ini  
-
-#export OMP_NUM_THREADS=8
-
-
-export outsuff="" ## Can be set non-empty to alter the  output directory
 
 export fcdate=`date -u -d "3 hours" +%Y%m%d`
 export globfcdate=`date -u -d "- 2 days $fcdate" +%Y%m%d`
 export maxhours=48
 
-export email="test-iran"
-export lonrange="43.,64."
-export latrange="25.,40."
-export suitename="IRAN"
+
+
 export urlpref="https://silam.fmi.fi/thredds/ncss/grid/silam_glob_v5_7_1/runs/silam_glob_v5_7_1_RUN_"
 
 export publish=true

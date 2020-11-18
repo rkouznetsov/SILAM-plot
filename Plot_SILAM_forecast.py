@@ -63,7 +63,7 @@ tstart=dt.datetime.strptime(fcdate,"%Y%m%d")
 tend=tstart + dt.timedelta(hours=maxhours)
 runTstr =basedate.strftime("%FT00:00:00Z")
 startTstr=tstart.strftime("%FT00:00:00Z")
-endTstr=tend.strftime("%FT00:00:00Z")
+endTstr=tend.strftime("%FT%H:%M:%SZ")
 # request the data
 URL="%s%s?var=%s&temporal=range&time_start=%s&time_end=%s&%s&vertCoord=12&accept=netcdf&%s"%(urlbase,runTstr,",".join(varlist),startTstr,endTstr,bbox,requestmark)
 
@@ -136,17 +136,17 @@ gradsp=subp.Popen((gradsbin+" -b  -l").split(), shell=False, bufsize=100000, std
 grads_scr="""
 
 set gxout grfill
-set mpdset hires
+set mpdset mpd_irantaj
 ## draw shoreline
-*set mpt 1 1 1 1
+set mpt 1 1 1 1
 * grid off
-* set mpt 2 off
+set mpt 2 off
 ** Inland borders thick dark green
 *   'set rgb  250  0  50  0'
-**   'set mpt 3 15 1 2'
+*   'set mpt 3 15 1 2'
 *   'set mpt 3 250 1 2'
 * Thin short dash
-* set mpt 3 1 1 6
+ set mpt 3 1 1 1
 * rivers -- blue 
 * set rgb  251  200  200  255
 * set mpt 4 4 1 0.1
@@ -169,16 +169,16 @@ for it in range((tend-tstart).days*24 + 1):
      outname=picdir+shortvar[v]+"_surf_%(t)03d.png"%dict(t=it)
      #print(outname)
      grads_scr += """
-                set t %(t)d 
+                set time %(t)s
                 set clevs %(levs)s
                 set grads off
                 d  %(v)s
-                labels
+                labels_%(domain)s
                 cbar
                 draw title %(vS)s concentration (ug/m3), %(date)s hour: %(hour)s 
                 printim %(outname)s x800 y600 white
                 clear
-              """%dict(t=it+1, v=v, vS=shortvar[v], date=date , hour=hour, outname=outname, levs=levs[v])
+              """%dict(t=gradstime, v=v, vS=shortvar[v], date=date , hour=hour, outname=outname, levs=levs[v], domain=domain)
 grads_scr += 'quit\r\n'
 
 

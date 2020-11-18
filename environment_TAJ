@@ -1,0 +1,6 @@
+export email="test-taj"
+export lonrange="67.,75."
+export latrange="36.,41."
+export suitename="TAJ"
+
+export OUTPUT_DIR=${scriptdir}/output-${suitename}

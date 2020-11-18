@@ -3,6 +3,16 @@ set -u -e
 
 # put logo if corresponding command is provided
 #cd $scriptdir/delme || exit 234
+
+#Acquire and polt
+source environment_$1
+
+picture_dir=$OUTPUT_DIR/webloads/${fcdate}
+
+python3 Plot_SILAM_forecast.py
+
+
+nproc=`nproc`
 if [  -z ${PUTLOGOCMD+x}  ]; then
    echo PUTLOGOCMD is not set
 else
@@ -47,10 +57,10 @@ if $publish; then
     fi
 
     popd
-    fmi_data_path=eslogin:/fmi/data/silam.fmi.fi/partners/KAZ
-    echo Syncing $outputdir/webloads to $fmi_data_path
+    fmi_data_path=eslogin:/fmi/data/silam.fmi.fi/partners/$suitename
+    echo Syncing $OUTPUT_DIR/webloads to $fmi_data_path
 #    mkdir -p $fmi_data_path
-    $rsync -a --delete  $outputdir/webloads/* $fmi_data_path/
+    rsync -a --delete  $OUTPUT_DIR/webloads/* $fmi_data_path/
 fi
 exit 0
 
