@@ -21,3 +21,12 @@ export PUTLOGOCMD="composite  -geometry  +110+475  $scriptdir/fmi-logo-60x30a.pn
 export PUTLOGOCMDINDEX="$PUTLOGOCMD"
 
 export outsuff=""
+
+
+export email="test-taj"
+export lonrange="62.,80."
+export latrange="31.,46."
+export suitename="TAJ"
+
+export OUTPUT_DIR=${scriptdir}/output-${suitename}
+export domainname=Tajikistan

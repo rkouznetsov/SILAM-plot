@@ -1,7 +1,0 @@
-export email="test-iran"
-export lonrange="43.,64."
-export latrange="24.,40."
-export suitename="IRAN"
-
-export OUTPUT_DIR=${scriptdir}/output-${suitename}
-domainname=Iran

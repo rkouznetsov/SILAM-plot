@@ -18,12 +18,6 @@ ypos1=subwrd(result,6)
 'set string 1 bl'
 'draw string 'xpos1' 'ypos1' .Kulob'
 'draw mark 2 'xpos1' 'ypos1' 0.05'
-'q w2xy 68.7803 37.8364'
-xpos1=subwrd(result,3)
-ypos1=subwrd(result,6)
-'set string 1 bl'
-'draw string 'xpos1' 'ypos1' .Qurgonteppa'
-'draw mark 2 'xpos1' 'ypos1' 0.05'
 'q w2xy 69.0064 39.9108'
 xpos1=subwrd(result,3)
 ypos1=subwrd(result,6)

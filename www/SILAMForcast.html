@@ -118,7 +118,7 @@ function mkanimbody()
   document.writeln('<A HREF="javascript:void(0)" onMouseOver="javascript:showgif('+n+',1)">');
   document.writeln('<BR><IMG ALIGN="MIDDLE" HSPACE="0" VSPACE="0" NAME="img'+n+'" SRC="'+preplay[0].src+'"></A><BR>')
  
-  document.writeln('<BR><BR><BR><BR><BR><BR><BR><BR><BR>');
+  document.writeln('<BR><BR>');
  
   document.writeln('</TD></TR>');
 
@@ -162,9 +162,9 @@ var fff;
        if (i>0) {
         ddd = "000";
         fff = i; 
-       } else if(i == imin){ // Allow for 00h for the first pic
-        ddd = "00" + (~~((-i+1)/24));
-        fff = ((i+480 )%24) ;
+//       } else if(i == imin){ // Allow for 00h for the first pic
+//        ddd = "00" + (~~((-i+1)/24));
+//        fff = ((i+480 )%24) ;
        } else {
         ddd = "00" + (~~((-i)/24)+1);
         fff = ((i+480 - 1)%24) + 1;
@@ -193,7 +193,14 @@ preload();      // Must be after the SSI
 
 <BODY BGCOLOR=white onLoad="restart()">
 <CENTER>
-<BODY LINK=white VLINK=white ALINK=white>
+
+
+<FONT COLOR=blue>SILAM AQ animations for FINTAJ 2 project</FONT>
+
+<p></p>
+Zoom from the <A href="https://silam.fmi.fi/aqforecast.html?parameter=O3&region=Glob&height=0" target="_top">global Silam suite</A>
+<p></p>
+<hr>
 
 <SCRIPT LANGUAGE="JavaScript">
 mkanimbody();
