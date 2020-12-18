@@ -21,3 +21,12 @@ export PUTLOGOCMD="composite  -geometry  +110+475  $scriptdir/fmi-logo-60x30a.pn
 export PUTLOGOCMDINDEX="$PUTLOGOCMD"
 
 export outsuff=""
+
+
+export email="test-iran"
+export lonrange="43.,64."
+export latrange="24.,40."
+export suitename="IRAN"
+
+export OUTPUT_DIR=${scriptdir}/output-${suitename}
+export domainname=Iran

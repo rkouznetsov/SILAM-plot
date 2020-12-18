@@ -5,7 +5,6 @@ set -u -e
 #cd $scriptdir/delme || exit 234
 
 #Acquire and polt
-source environment_$1
 
 picture_dir=$OUTPUT_DIR/webloads/${fcdate}
 
@@ -52,8 +51,7 @@ if $publish; then
 
     #deploy animation if not yet...
     if [ !  -d Napit ]; then
-     rsync -av $scriptdir/www/*.html .
-     sed -i "s/XXXXXXX/${domainname}/g" toc.html
+     rsync -av $scriptdir/www/*.html $scriptdir/www/logos .
      tar -xvf  $scriptdir/www/Napit.tar
     fi
 
