@@ -50,8 +50,8 @@ if $publish; then
     done
 
     #deploy animation if not yet...
+    rsync -av $scriptdir/www/*.html $scriptdir/www/logos .
     if [ !  -d Napit ]; then
-     rsync -av $scriptdir/www/*.html $scriptdir/www/logos .
      tar -xvf  $scriptdir/www/Napit.tar
     fi
 
