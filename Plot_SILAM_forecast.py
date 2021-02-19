@@ -94,7 +94,7 @@ def getNC(URL, ncfile):
     else:
         print("Getting "+ ncfile)
 
-        for  attempts in range(3):
+        for  attempts in range(10):
 
             try:
                 response = urllib.request.urlopen(URL) #, timeout = 600)
@@ -106,11 +106,11 @@ def getNC(URL, ncfile):
                 break
             except urllib.error.URLError as e:
                 attempts += 1
-                print("Download attampt %d failes"%(attempts))
                 print(e)
-                print(type(e))
+                print("Download attampt %d failes, sleeping 10 s"%(attempts))
+                time.sleep(10)
 
-        if attempts > 2:
+        if attempts > 9:
             print ("Failed to get the data")
             sys.exit(255)
 
