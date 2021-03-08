@@ -10,23 +10,21 @@ picture_dir=$OUTPUT_DIR/webloads/${fcdate}
 
 python3 Plot_SILAM_forecast.py
 
-
-nproc=`nproc`
+nproc=20
 if [  -z ${PUTLOGOCMD+x}  ]; then
    echo PUTLOGOCMD is not set
 else
    echo Putting logos
-   ls ${picture_dir}/*.png |grep -v AQI_ |grep -v POLI_| xargs  -I XXX -P 10 ${PUTLOGOCMD} XXX XXX  
+   pushd ${picture_dir}
+   ls *.png |grep -v AQI_ |grep -v POLI_ | xargs  -I YYY -P $nproc -t  ${PUTLOGOCMD} YYY YYY  
    if [  -n ${PUTLOGOCMDINDEX+x}  ]; then
       #separate logo for AQI
-      ls ${picture_dir}/*[AO][QL]I_???.png | xargs  -I XXX -P 10 ${PUTLOGOCMDINDEX} XXX XXX  
+      ls *[AO][QL]I_???.png | xargs  -I YYY -P ${nproc} ${PUTLOGOCMDINDEX} YYY YYY  
    fi
    echo compressing pics
-   ls ${picture_dir}/*.png  | xargs  -I XXX -P $nproc convert XXX PNG8:XXX
+   ls *.png  | xargs  -I YYY -t -P $nproc convert YYY PNG8:YYY
+   popd
 fi
-#echo waiting..
-#wait
-
 
 
 echo Done with logos!

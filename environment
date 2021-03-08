@@ -16,17 +16,17 @@ export urlpref="https://silam.fmi.fi/thredds/ncss/grid/silam_glob_v5_7_1/runs/si
 export publish=true
 # Geometry depends on the picture Upper-leftcorner of logo with respect
 # to upper-left corner of a picture 
-export PUTLOGOCMD="composite  -geometry  +110+475  $scriptdir/fmi-logo-60x30a.png"
+export PUTLOGOCMD="composite  -geometry  +45+500  $scriptdir/fmi-logo-60x30a.png"
 # Special logo for aqi and pollen index pictures
 export PUTLOGOCMDINDEX="$PUTLOGOCMD"
 
 export outsuff=""
 
 
-export email="test-taj"
-export lonrange="62.,80."
-export latrange="31.,46."
-export suitename="TAJ"
+export email="test-kgz"
+export lonrange="67.,82."
+export latrange="37.,46."
+export suitename="KGZ"
 
 export OUTPUT_DIR=${scriptdir}/output-${suitename}
-export domainname=Tajikistan
+export domainname=Kyrgyzstan

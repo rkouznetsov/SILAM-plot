@@ -1,56 +1,38 @@
 function labels (args)
 'set line 1'
-'q w2xy 68.7864 38.5731'
+'q w2xy 74.56324 42.88305'
 xpos1=subwrd(result,3)
 ypos1=subwrd(result,6)
 'set string 1 bl'
-'draw string 'xpos1' 'ypos1' .Dushanbe'
+'draw string 'xpos1' 'ypos1' .Bishkek'
 'draw mark 2 'xpos1' 'ypos1' 0.05'
-'q w2xy 69.6167 40.2833'
-xpos1=subwrd(result,3)
-ypos1=subwrd(result,6)
-'set string 1 br'
-'draw string 'xpos1-0.05' 'ypos1' Khujand'
-'draw mark 2 'xpos1' 'ypos1' 0.05'
-'q w2xy 69.7808 37.9119'
+'q w2xy 72.81568 40.52107'
 xpos1=subwrd(result,3)
 ypos1=subwrd(result,6)
 'set string 1 bl'
-'draw string 'xpos1' 'ypos1' .Kulob'
+'draw string 'xpos1' 'ypos1' .Osh'
 'draw mark 2 'xpos1' 'ypos1' 0.05'
-'q w2xy 69.0064 39.9108'
+'q w2xy 72.99531 40.93454'
 xpos1=subwrd(result,3)
 ypos1=subwrd(result,6)
 'set string 1 bl'
-'draw string 'xpos1' 'ypos1' .Istaravshan'
+'draw string 'xpos1' 'ypos1' .Jalal-Abad'
 'draw mark 2 'xpos1' 'ypos1' 0.05'
-'q w2xy 70.4167 40.2833'
+'q w2xy 78.39224 42.50162'
 xpos1=subwrd(result,3)
 ypos1=subwrd(result,6)
 'set string 1 bl'
-'draw string 'xpos1' 'ypos1' .Konibodom'
+'draw string 'xpos1' 'ypos1' .Karakol'
 'draw mark 2 'xpos1' 'ypos1' 0.05'
-'q w2xy 68.2303 38.5108'
-xpos1=subwrd(result,3)
-ypos1=subwrd(result,6)
-'set string 1 br'
-'draw string 'xpos1-0.05' 'ypos1' Tursunzoda'
-'draw mark 2 'xpos1' 'ypos1' 0.05'
-'q w2xy 70.6333 40.1167'
+'q w2xy 76.83152 43.22548'
 xpos1=subwrd(result,3)
 ypos1=subwrd(result,6)
 'set string 1 bl'
-'draw string 'xpos1' 'ypos1' .Isfara'
+'draw string 'xpos1' 'ypos1' .Almaty'
 'draw mark 2 'xpos1' 'ypos1' 0.05'
-'q w2xy 67.6150 39.5031'
+'q w2xy 68.76091 38.59164'
 xpos1=subwrd(result,3)
 ypos1=subwrd(result,6)
 'set string 1 bl'
-'draw string 'xpos1' 'ypos1' .Panjakent'
-'draw mark 2 'xpos1' 'ypos1' 0.05'
-'q w2xy 71.5575 37.4917'
-xpos1=subwrd(result,3)
-ypos1=subwrd(result,6)
-'set string 1 bl'
-'draw string 'xpos1' 'ypos1' .Khorugh'
+'draw string 'xpos1' 'ypos1' .Dushanbeh'
 'draw mark 2 'xpos1' 'ypos1' 0.05'
