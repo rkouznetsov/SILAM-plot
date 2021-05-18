@@ -6,6 +6,7 @@ export scriptdir=`pwd`
 
 
 export fcdate=`date -u -d "3 hours" +%Y%m%d`
+export fcdate=`date -u -d "-24 hours" +%Y%m%d`
 export globfcdate=`date -u -d "- 2 days $fcdate" +%Y%m%d`
 export maxhours=48
 
@@ -23,10 +24,10 @@ export PUTLOGOCMDINDEX="$PUTLOGOCMD"
 export outsuff=""
 
 
-export email="test-taj"
-export lonrange="62.,80."
-export latrange="31.,46."
-export suitename="TAJ"
+export email="test-vnm"
+export lonrange="90.,120."
+export latrange="5.,25."
+export suitename="VNM"
 
 export OUTPUT_DIR=${scriptdir}/output-${suitename}
-export domainname=Tajikistan
+export domainname=Vietnam
