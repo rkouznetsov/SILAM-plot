@@ -6,8 +6,8 @@ export scriptdir=`pwd`
 
 
 export fcdate=`date -u -d "3 hours" +%Y%m%d`
-export fcdate=`date -u -d "-24 hours" +%Y%m%d`
-export globfcdate=`date -u -d "- 2 days $fcdate" +%Y%m%d`
+#export fcdate=`date -u -d "-24 hours" +%Y%m%d`
+#export globfcdate=`date -u -d "- 2 days $fcdate" +%Y%m%d`
 export maxhours=48
 
 export gradsnc=`which grads`
