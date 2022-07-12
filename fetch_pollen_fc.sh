@@ -7,16 +7,15 @@
 # Enjoy!
 
 
-basedate=${1:today} 
-basedate=`date -u -d "$basedate" +%Y%m%d`
-
 set -u 
 set -e
 ncks=ncks
 
-mkdir -p $DATADIR
+basedate=${fcdate}
 
-cd $DATADIR
+mkdir -p $OUTPUT_DIR/${fcdate}
+cd $OUTPUT_DIR/${fcdate}
+outf="silamFC-$basedate.nc"
 
 varlist="cnc_POLLEN_ALDER_m22,cnc_POLLEN_BIRCH_m22,cnc_POLLEN_GRASS_m32,cnc_POLLEN_MUGWORT_m18,cnc_POLLEN_OLIVE_m28,cnc_POLLEN_RAGWEED_m18"
 
@@ -33,7 +32,6 @@ URL="https://silam.fmi.fi/thredds/ncss/silam_europe_pollen_v5_8/runs/silam_europ
 
 
 ## The command that fails, but leaves trace in threds logs, so I could grep your request from there
-outf="silamFC$basedate.nc"
 
 if [ ! -f $outf ]; then
   subset="&maxy=0&minx=12&maxx=28&miny=-15"
@@ -46,11 +44,5 @@ if [ ! -f $outf ]; then
   mv ${outf}-tmp2.nc ${outf}
   rm  ${outf}-tmp.nc
 fi
-
-
-
-
-
-date
 
 

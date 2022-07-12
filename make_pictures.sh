@@ -8,19 +8,22 @@ set -u -e
 
 picture_dir=$OUTPUT_DIR/webloads/${fcdate}
 
-python3 Plot_SILAM_forecast.py
-
+bash fetch_pollen_fc.sh
 
 nproc=`nproc`
+
+ncfile=$OUTPUT_DIR/${fcdate}/silamFC-$fcdate.nc
+picture_dir=$OUTPUT_DIR/webloads/${fcdate}
+mkdir -p ${picture_dir}
+for taxon in alder birch grass mugwort olive ragweed; do
+    echo "$gradsnc -blc \'run draw_pollen.gs ${ncfile} ${fcdate} ${taxon} ${picture_dir}/${taxon} cams\'"
+done | xargs -P $nproc -IXXX sh -c "XXX"
+
 if [  -z ${PUTLOGOCMD+x}  ]; then
    echo PUTLOGOCMD is not set
 else
    echo Putting logos
-   ls ${picture_dir}/*.png |grep -v AQI_ |grep -v POLI_| xargs  -I XXX -P 10 ${PUTLOGOCMD} XXX XXX  
-   if [  -n ${PUTLOGOCMDINDEX+x}  ]; then
-      #separate logo for AQI
-      ls ${picture_dir}/*[AO][QL]I_???.png | xargs  -I XXX -P 10 ${PUTLOGOCMDINDEX} XXX XXX  
-   fi
+   ls ${picture_dir}/*.png | xargs  -I XXX -P $nproc ${PUTLOGOCMD} XXX XXX  
    echo compressing pics
    ls ${picture_dir}/*.png  | xargs  -I XXX -P $nproc convert XXX PNG8:XXX
 fi
@@ -33,7 +36,6 @@ echo Done with logos!
 [ -n "$outsuff" ] && exit 0 #No publish for modified runs
 
 
-if $publish; then
     keepdays=7
     pushd $picture_dir/..
     for d in `find . -type d -name '20??????'|sort|head -n -$keepdays`; do
@@ -56,7 +58,10 @@ if $publish; then
     fi
 
     popd
-    fmi_data_path=eslogin:/fmi/data/silam.fmi.fi/partners/$suitename
+
+
+if $publish; then
+    fmi_data_path=$some_location_for_the_website_directory
     echo Syncing $OUTPUT_DIR/webloads to $fmi_data_path
 #    mkdir -p $fmi_data_path
     rsync -a --delete  $OUTPUT_DIR/webloads/* $fmi_data_path/
