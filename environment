@@ -2,32 +2,18 @@
 
 export scriptdir=`pwd`
 
+export fcdate=`date -u +%Y%m%d`
 
-
-
-export fcdate=`date -u -d "3 hours" +%Y%m%d`
-#export fcdate=`date -u -d "-24 hours" +%Y%m%d`
-export globfcdate=`date -u -d "- 2 days $fcdate" +%Y%m%d`
-export maxhours=48
+export DATADIR=silam-dl
+export email="test-ukr-pollen"
 
 export gradsnc=`which grads`
-
-export urlpref="https://silam.fmi.fi/thredds/ncss/grid/silam_glob_v5_7_1/runs/silam_glob_v5_7_1_RUN_"
 
 export publish=true
 # Geometry depends on the picture Upper-leftcorner of logo with respect
 # to upper-left corner of a picture 
-export PUTLOGOCMD="composite  -geometry  +110+475  $scriptdir/fmi-logo-60x30a.png"
+export PUTLOGOCMD="composite  -geometry  +77+465  $scriptdir/fmi-logo-60x30a.png"
 # Special logo for aqi and pollen index pictures
 export PUTLOGOCMDINDEX="$PUTLOGOCMD"
 
-export outsuff=""
-
-
-export email="test-vnm"
-export lonrange="90.,120."
-export latrange="5.,25."
-export suitename="VNM"
-
-export OUTPUT_DIR=${scriptdir}/output-${suitename}
-export domainname=Vietnam
+#export outsuff=""

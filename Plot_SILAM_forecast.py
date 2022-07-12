@@ -2,11 +2,10 @@
 
 import datetime as dt
 import subprocess as subp
-import atexit
-import urllib.request, urllib.error, urllib.parse
-import signal
 import os
 import sys
+
+
 
 """
 # Pretend that the forecast starts at the fcdate
