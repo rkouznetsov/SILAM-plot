@@ -5,14 +5,15 @@ export scriptdir=`pwd`
 
 
 
-export fcdate=`date -u -d "3 hours" +%Y%m%d`
+export fcdate=`date -u -d "-6 hours" +%Y%m%d`
 #export fcdate=`date -u -d "-24 hours" +%Y%m%d`
-export globfcdate=`date -u -d "- 2 days $fcdate" +%Y%m%d`
+#export globfcdate=$fcdate
 export maxhours=48
 
 export gradsnc=`which grads`
 
-export urlpref="https://silam.fmi.fi/thredds/ncss/grid/silam_glob_v5_7_1/runs/silam_glob_v5_7_1_RUN_"
+#export urlpref="https://silam.fmi.fi/thredds/ncss/grid/silam_glob_v5_7_1/runs/silam_glob_v5_7_1_RUN_"
+export urlpref="https://silam.fmi.fi/thredds/ncss/silam_regional_v5_7/runs/silam_regional_v5_7_RUN_"
 
 export publish=true
 # Geometry depends on the picture Upper-leftcorner of logo with respect
@@ -24,10 +25,10 @@ export PUTLOGOCMDINDEX="$PUTLOGOCMD"
 export outsuff=""
 
 
-export email="test-vnm"
-export lonrange="90.,120."
-export latrange="5.,25."
-export suitename="VNM"
+export email="test-fin"
+export lonrange="19.4,25."
+export latrange="59.2,61.2"
+export suitename="SWFIN"
 
 export OUTPUT_DIR=${scriptdir}/output-${suitename}
-export domainname=Vietnam
+export domainname='SWFIN'

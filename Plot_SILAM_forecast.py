@@ -7,6 +7,7 @@ import urllib.request, urllib.error, urllib.parse
 import signal
 import os
 import sys
+import time
 
 """
 # Pretend that the forecast starts at the fcdate
@@ -17,7 +18,7 @@ import sys
 # Get environment
 OUTPUT_DIR=os.getenv("OUTPUT_DIR",None)
 fcdate=os.getenv("fcdate",None)
-globfcdate=os.getenv("globfcdate",None)
+globfcdate=fcdate
 maxhours=int(os.getenv("maxhours",None))
 email=os.getenv("email",None)
 lonrange=os.getenv("lonrange",None)
@@ -104,6 +105,12 @@ def getNC(URL, ncfile):
                 print(ncfile + " created!")
                 
                 break
+            except urllib.error.HTTPError as e:
+                if e.code in [ 400, 404 ]:
+                    print("Failed URL:")
+                    print(URL)
+                print(e)
+                raise
             except urllib.error.URLError as e:
                 attempts += 1
                 print(e)
@@ -118,12 +125,16 @@ def getNC(URL, ncfile):
 # Plot the results with GrADs
 # 
 gradsscripthead="""
-    set gxout shaded
-    set mpdset mpd_vnm
-    set mpt 1 1 1 1
-    set mpt 2 off
-    set mpt 3 1 1 1
-    set mproj scaled
+   set gxout shaded
+   set mpdset meps2020-rll
+   set mpt 1 1 1 1
+   set gridln off
+   set mpt 2 1 5 0.5
+   set mpt 3 1 1 1
+   set rgb  251  200  200  255
+   set mpt 4 4 1 0.1
+   set xlab off
+   set ylab off
 """
 #   set mpt 1 1 1 1
 #   * grid off
@@ -154,7 +165,7 @@ def PlotCNC(ncfile, v, outtempl, tstart, tend):
     elif v == 'BLH':
         title="ABL heoght (m)"
 
-    for it in range((tend-tstart).days*24 + 1):
+    for it in range(1,(tend-tstart).days*24 + 1):
        plottime = tstart + dt.timedelta(hours=it)
        gradstime=plottime.strftime("%H:%MZ%d%b%Y")
        date=plottime.strftime("%d%b%Y")
@@ -176,7 +187,7 @@ def PlotCNC(ncfile, v, outtempl, tstart, tend):
     grads_scr += 'quit\r\n'
 
     gradsout,gradserr = gradsp.communicate(grads_scr.encode('utf-8'))
-    print(gradserr)
+    #print(gradserr)
     #os.unlink(ncfile)
 
     if  os.path.isfile(outname):
