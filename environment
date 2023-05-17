@@ -14,11 +14,12 @@ export gradsnc=`which grads`
 
 #export urlpref="https://silam.fmi.fi/thredds/ncss/grid/silam_glob_v5_7_1/runs/silam_glob_v5_7_1_RUN_"
 export urlpref="https://silam.fmi.fi/thredds/ncss/silam_regional_v5_7/runs/silam_regional_v5_7_RUN_"
+#export urlpref="https://thredds.silam.fmi.fi/thredds/ncss/grid/silam_regional_v5_7/runs/silam_regional_v5_7_RUN_"
 
 export publish=true
 # Geometry depends on the picture Upper-leftcorner of logo with respect
 # to upper-left corner of a picture 
-export PUTLOGOCMD="composite  -geometry  +110+475  $scriptdir/fmi-logo-60x30a.png"
+export PUTLOGOCMD="composite  -geometry  +130+475  $scriptdir/fmi-logo-60x30a.png"
 # Special logo for aqi and pollen index pictures
 export PUTLOGOCMDINDEX="$PUTLOGOCMD"
 
