@@ -11,7 +11,7 @@ export maxhours=48
 
 export gradsnc=`which grads`
 
-export urlpref="https://silam.fmi.fi/thredds/ncss/grid/silam_glob_v5_7_1/runs/silam_glob_v5_7_1_RUN_"
+export urlpref="https://thredds.silam.fmi.fi/thredds/ncss/grid/silam_glob_v5_7_1/runs/silam_glob_v5_7_1_RUN_"
 
 export publish=true
 # Geometry depends on the picture Upper-leftcorner of logo with respect
