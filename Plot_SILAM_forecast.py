@@ -29,22 +29,22 @@ domain=os.getenv("suitename",None)
 
 
 #urlbase="https://silam.fmi.fi/thredds/ncss/grid/silam_glob_v5_7_1/runs/silam_glob_v5_7_1_RUN_"
-urlbase=os.getenv("urlpref",None)
+#urlbase=os.getenv("urlpref",None)
+urlbase="https://thredds.silam.fmi.fi/thredds/ncss/grid/silam_glob_v6_1_sfc/files/SILAM-AQ-sfc-glob_v6_1_%s00.nc4"%(globfcdate)
 lons=lonrange.split(',')
 lats=latrange.split(',')
 bbox="spatial=bb&north=%s&west=%s&east=%s&south=%s"%(lats[1],lons[0],lons[1],lats[0]);
 # list of variables and levels according to MKD AQ index
-varlist="cnc_PM2_5 cnc_PM10 cnc_O3_gas cnc_NO2_gas cnc_SO2_gas cnc_CO_gas".split()
-varlistsfc="BLH AQI AQISRC".split()
+varlist="cnc_PM2_5 cnc_PM10 vmr_O3_gas vmr_NO2_gas vmr_SO2_gas vmr_CO_gas BLH AQI AQISRC".split()
 #varlist="cnc_CO_gas".split() 
 lev_nam_col=dict(
-          cnc_PM2_5=("1 2 5 10 20 50 100 200 500",             "PM2_5",  'def_lowwhite'), 
-          cnc_PM10=("3 6 15 30 60 150 300 600 1500 3000",                      "PM10",  'def_lowwhite'), 
-          cnc_O3_gas=("10 20 40 60 80 100 120 140 160 180 200",                "O3", 'def_lowwhite'),
-          cnc_NO2_gas=(".1 .2 .5 1 2 5 10 20 50 100",               "NO2", "def_lowblue"),
-          cnc_SO2_gas=(".1 .2 .5 1 2 5 10 20 50 100",                "SO2", "def_lowblue"),
-          cnc_CO_gas=("15 25 40 70 150 250 400 700 1500 2500",  "CO", 'def_lowwhite'),
-          BLH = ("10 20 40 80 150 250 400 700 1500 2500",  "BLH", 'def_lowgrey'),
+          cnc_PM2_5  =(1e9,          "1 2 5 10 20 50 100 200 500",             "PM2_5",  'def_lowwhite'), 
+          cnc_PM10   =(1e9,          "3 6 15 30 60 150 300 600 1500 3000",      "PM10",  'def_lowwhite'), 
+          vmr_O3_gas =(1./1.9957e-9, "10 20 40 60 80 100 120 140 160 180 200",  "O3",    'def_lowwhite'),
+          vmr_NO2_gas=(1./1.9125e-9, ".1 .2 .5 1 2 5 10 20 50 100",             "NO2",   "def_lowblue"),
+          vmr_SO2_gas=(1./2.6609e-9, ".1 .2 .5 1 2 5 10 20 50 100",             "SO2",   "def_lowblue"),
+          vmr_CO_gas = (1./1.1642e-9, "15 25 40 70 150 250 400 700 1500 2500",  "CO",    'def_lowwhite'),
+          BLH        = (1.,           "10 20 40 80 150 250 400 700 1500 2500",  "BLH",   'def_lowgrey'),
           )
 
 # area to be plotted: Macedonian domain
@@ -56,7 +56,6 @@ one_hour=dt.timedelta(hours=1)
 basedate=dt.datetime.strptime(globfcdate,"%Y%m%d")
 tstart=dt.datetime.strptime(fcdate,"%Y%m%d")
 tend=tstart + dt.timedelta(hours=maxhours)
-runTstr =basedate.strftime("%FT00:00:00Z")
 startTstr=tstart.strftime("%FT00:00:00Z")
 endTstr=tend.strftime("%FT%H:%M:%SZ")
 #
@@ -147,8 +146,10 @@ def PlotCNC(ncfile, v, outtempl, tstart, tend):
     sdfopen %(ncfile)s
     """%dict(ncfile=ncfile)
 
-    clev,snam2,colors = lev_nam_col[v]
+    factor, clev,snam2,colors = lev_nam_col[v]
     grads_scr += "run colors.gs %s\n"%(colors,)
+    if v.startswith("vmr_"):
+        title="%s EU concentration (ug/m3)"%(snam2)
     if v.startswith("cnc_"):
         title="%s concentration (ug/m3)"%(snam2)
     elif v == 'BLH':
@@ -166,13 +167,13 @@ def PlotCNC(ncfile, v, outtempl, tstart, tend):
               set time %(t)s
               set clevs %(levs)s
               set grads off
-              d  %(v)s
+              d  %(v)s * %(factor)g
               labels
               cbarn
               draw title %(title)s, %(date)s hour: %(hour)sZ 
               printim %(outname)s x800 y600 white
               clear
-            """%dict(t=gradstime, v=v, title=title, date=date , hour=hour, outname=outname, levs=clev)
+            """%dict(t=gradstime, v=v, title=title, date=date , hour=hour, outname=outname, levs=clev, factor=factor)
     grads_scr += 'quit\r\n'
 
     gradsout,gradserr = gradsp.communicate(grads_scr.encode('utf-8'))
@@ -263,22 +264,21 @@ print ("Checking if NetCDF files are available at FMI")
 #
 
 ncfile=ncdir+"/SILAM4%s-%s.nc"%(domain,tstart.strftime("%Y%m%d"))
-URL="%s%s?var=%s&temporal=range&time_start=%s&time_end=%s&%s&vertCoord=12&accept=netcdf&%s"%(urlbase,runTstr,",".join(varlist),startTstr,endTstr,bbox,requestmark)
-getNC(URL, ncfile)
-
-ncfileAQI=ncdir+"/SILAM4%s-%s-AQI.nc"%(domain,tstart.strftime("%Y%m%d"))
-URL="%s%s?var=%s&temporal=range&time_start=%s&time_end=%s&%s&accept=netcdf&%s"%(urlbase,runTstr,"AQI,AQISRC,BLH",startTstr,endTstr,bbox,requestmark)
-getNC(URL, ncfileAQI)
+URL="%s?var=%s&temporal=range&time_start=%s&time_end=%s&%s&accept=netcdf4&%s"%(urlbase,",".join(varlist),startTstr,endTstr,bbox,requestmark)
+print("Getting %s to %s"%(URL,ncfile))
+getNC(URL, ncfile+'.tmp')
+os.replace(ncfile+'.tmp', ncfile)
 
 print('Creating pictures at '+picdir)
 for v in varlist:
-    clev,snam2,colors = lev_nam_col[v]
-    outtempl = picdir+snam2+"_surf_%03d.png"
-    PlotCNC(ncfile, v, outtempl, tstart, tend)
+    if v.startswith('cnc_') or  v.startswith('vmr_'):
+        factor, clev,snam2,colors = lev_nam_col[v]
+        outtempl = picdir+snam2+"_surf_%03d.png"
+        PlotCNC(ncfile, v, outtempl, tstart, tend)
 
 outtempl = picdir+"BLH_%03d.png"
-PlotCNC(ncfileAQI, "BLH", outtempl, tstart, tend)
+PlotCNC(ncfile, "BLH", outtempl, tstart, tend)
 
 outtempl = picdir+"AQI_%03d.png"
-PlotAQI(ncfileAQI,  outtempl, tstart, tend)
+PlotAQI(ncfile,  outtempl, tstart, tend)
 

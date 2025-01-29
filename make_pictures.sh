@@ -7,6 +7,7 @@ set -u -e
 #Acquire and polt
 
 picture_dir=$OUTPUT_DIR/webloads/${fcdate}
+export globfcdate=`date -u -d "- 2 days $fcdate" +%Y%m%d`
 
 python3 Plot_SILAM_forecast.py
 
@@ -56,7 +57,7 @@ if $publish; then
     fi
 
     popd
-    fmi_data_path=eslogin:/fmi/data/silam.fmi.fi/partners/$suitename
+    fmi_data_path=/fmi/data/silam.fmi.fi/partners/$suitename
     echo Syncing $OUTPUT_DIR/webloads to $fmi_data_path
 #    mkdir -p $fmi_data_path
     rsync -a --delete  $OUTPUT_DIR/webloads/* $fmi_data_path/
