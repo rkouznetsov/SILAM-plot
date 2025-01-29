@@ -7,6 +7,7 @@ set -u -e
 #Acquire and polt
 
 picture_dir=$OUTPUT_DIR/webloads/${fcdate}
+export globfcdate=`date -u -d "- 2 days $fcdate" +%Y%m%d`
 
 python3 Plot_SILAM_forecast.py
 
