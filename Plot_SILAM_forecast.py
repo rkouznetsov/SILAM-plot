@@ -35,17 +35,17 @@ lons=lonrange.split(',')
 lats=latrange.split(',')
 bbox="spatial=bb&north=%s&west=%s&east=%s&south=%s"%(lats[1],lons[0],lons[1],lats[0]);
 # list of variables and levels according to MKD AQ index
-varlist="cnc_PM2_5 cnc_PM10 cnc_O3_gas cnc_NO2_gas cnc_SO2_gas cnc_CO_gas".split()
+varlist="cnc_PM2_5 cnc_PM10 cnc_O3_gas cnc_NO2_gas cnc_SO2_gas cnc_CO_gas air_dens".split()
 varlistsfc="BLH AQI AQISRC".split()
 #varlist="cnc_CO_gas".split() 
 lev_nam_col=dict(
-          cnc_PM2_5=("1 2 5 10 20 50 100 200 500",             "PM2_5",  'def_lowwhite'), 
-          cnc_PM10=("3 6 15 30 60 150 300 600 1500 3000",                      "PM10",  'def_lowwhite'), 
-          cnc_O3_gas=("10 20 40 60 80 100 120 140 160 180 200",                "O3", 'def_lowwhite'),
-          cnc_NO2_gas=(".1 .2 .5 1 2 5 10 20 50 100",               "NO2", "def_lowblue"),
-          cnc_SO2_gas=(".1 .2 .5 1 2 5 10 20 50 100",                "SO2", "def_lowblue"),
-          cnc_CO_gas=("15 25 40 70 150 250 400 700 1500 2500",  "CO", 'def_lowwhite'),
-          BLH = ("10 20 40 80 150 250 400 700 1500 2500",  "BLH", 'def_lowgrey'),
+          cnc_PM2_5=("1 2 5 10 20 50 100 200 500",             "PM2_5",  'def_lowwhite','*1e9'), 
+          cnc_PM10=("3 6 15 30 60 150 300 600 1500 3000",                      "PM10",  'def_lowwhite','*1e9'), 
+          cnc_O3_gas=("10 20 40 60 80 100 120 140 160 180 200",                "O3", 'def_lowwhite', '*48e6/air_dens*1.2' ),
+          cnc_NO2_gas=(".1 .2 .5 1 2 5 10 20 50 100",               "NO2", "def_lowblue", '*46e6/air_dens*1.2'),
+          cnc_SO2_gas=(".1 .2 .5 1 2 5 10 20 50 100",                "SO2", "def_lowblue", '*64e6/air_dens*1.2'),
+          cnc_CO_gas=("15 25 40 70 150 250 400 700 1500 2500",  "CO", 'def_lowwhite', '*28e6/air_dens*1.2'),
+          BLH = ("10 20 40 80 150 250 400 700 1500 2500",  "BLH", 'def_lowgrey', ''),
           )
 
 # area to be plotted: Macedonian domain
@@ -158,7 +158,7 @@ def PlotCNC(ncfile, v, outtempl, tstart, tend):
     sdfopen %(ncfile)s
     """%dict(ncfile=ncfile)
 
-    clev,snam2,colors = lev_nam_col[v]
+    clev,snam2,colors,factor = lev_nam_col[v]
     grads_scr += "run colors.gs %s\n"%(colors,)
     if v.startswith("cnc_"):
         title="%s concentration (ug/m3)"%(snam2)
@@ -183,7 +183,7 @@ def PlotCNC(ncfile, v, outtempl, tstart, tend):
               draw title %(title)s, %(date)s hour: %(hour)sZ 
               printim %(outname)s x800 y600 white
               clear
-            """%dict(t=gradstime, v=v, title=title, date=date , hour=hour, outname=outname, levs=clev)
+            """%dict(t=gradstime, v=v+factor, title=title, date=date , hour=hour, outname=outname, levs=clev)
     grads_scr += 'quit\r\n'
 
     gradsout,gradserr = gradsp.communicate(grads_scr.encode('utf-8'))
@@ -283,9 +283,10 @@ getNC(URL, ncfileAQI)
 
 print('Creating pictures at '+picdir)
 for v in varlist:
-    clev,snam2,colors = lev_nam_col[v]
-    outtempl = picdir+snam2+"_surf_%03d.png"
-    PlotCNC(ncfile, v, outtempl, tstart, tend)
+    if v.startswith("cnc_"):
+        clev,snam2,colors,factor = lev_nam_col[v]
+        outtempl = picdir+snam2+"_surf_%03d.png"
+        PlotCNC(ncfile, v, outtempl, tstart, tend)
 
 outtempl = picdir+"BLH_%03d.png"
 PlotCNC(ncfileAQI, "BLH", outtempl, tstart, tend)

@@ -12,8 +12,9 @@ export maxhours=48
 
 export gradsnc=`which grads`
 
-#export urlpref="https://silam.fmi.fi/thredds/ncss/grid/silam_glob_v5_7_1/runs/silam_glob_v5_7_1_RUN_"
-export urlpref="https://silam.fmi.fi/thredds/ncss/silam_regional_v5_7/runs/silam_regional_v5_7_RUN_"
+#export urlpref="https://silam.fmi.fi/thredds/ncss/silam_glob_v5_7_1/runs/silam_glob_v5_7_1_RUN_"
+#export urlpref="https://thredds.silam.fmi.fi/thredds/ncss/grid/silam_regional_v5_7/runs/silam_regional_v5_7_RUN_"
+export urlpref="https://thredds.silam.fmi.fi/thredds/ncss/grid/silam_regional_v5_9_1/runs/silam_regional_v5_9_1_RUN_"
 #export urlpref="https://thredds.silam.fmi.fi/thredds/ncss/grid/silam_regional_v5_7/runs/silam_regional_v5_7_RUN_"
 
 export publish=true
@@ -26,7 +27,7 @@ export PUTLOGOCMDINDEX="$PUTLOGOCMD"
 export outsuff=""
 
 
-export email="test-fin"
+export email="FIN-slim@haze"
 export lonrange="19.4,25."
 export latrange="59.2,61.2"
 export suitename="SWFIN"
