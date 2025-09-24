@@ -118,7 +118,7 @@ def getNC(URL, ncfile):
 # 
 gradsscripthead="""
     set gxout shaded
-    set mpdset mpd_taj
+    set mpdset mpd_uzb
     set mpt 1 1 1 1
     set mpt 2 off
     set mpt 3 1 1 1

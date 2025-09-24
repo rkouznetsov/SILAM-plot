@@ -23,10 +23,10 @@ export PUTLOGOCMDINDEX="$PUTLOGOCMD"
 export outsuff=""
 
 
-export email="test-taj"
-export lonrange="62.,80."
-export latrange="31.,46."
-export suitename="TAJ"
+export email="test-uzb"
+export lonrange="52.5,74."
+export latrange="35.,47."
+export suitename="UZB"
 
 export OUTPUT_DIR=${scriptdir}/output-${suitename}
-export domainname=Tajikistan
+export domainname=Uzbekistan
