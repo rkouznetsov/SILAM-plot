@@ -5,7 +5,7 @@ export scriptdir=`pwd`
 
 
 
-export fcdate=`date -u -d "-6 hours" +%Y%m%d`
+export fcdate=`date -u -d "-3 hours" +%Y%m%d`
 #export fcdate=`date -u -d "-24 hours" +%Y%m%d`
 #export globfcdate=$fcdate
 export maxhours=48
@@ -14,23 +14,23 @@ export gradsnc=`which grads`
 
 #export urlpref="https://silam.fmi.fi/thredds/ncss/silam_glob_v5_7_1/runs/silam_glob_v5_7_1_RUN_"
 #export urlpref="https://thredds.silam.fmi.fi/thredds/ncss/grid/silam_regional_v5_7/runs/silam_regional_v5_7_RUN_"
-export urlpref="https://thredds.silam.fmi.fi/thredds/ncss/grid/silam_regional_v5_9_1/runs/silam_regional_v5_9_1_RUN_"
+export urlpref="https://thredds.silam.fmi.fi/thredds/ncss/grid/silam_europe_v6_0/runs/silam_europe_v6_0_RUN_"
 #export urlpref="https://thredds.silam.fmi.fi/thredds/ncss/grid/silam_regional_v5_7/runs/silam_regional_v5_7_RUN_"
 
 export publish=true
 # Geometry depends on the picture Upper-leftcorner of logo with respect
 # to upper-left corner of a picture 
-export PUTLOGOCMD="composite  -geometry  +130+475  $scriptdir/fmi-logo-60x30a.png"
+export PUTLOGOCMD="composite  -geometry  +150+475  $scriptdir/fmi-logo-60x30a.png"
 # Special logo for aqi and pollen index pictures
-export PUTLOGOCMDINDEX="$PUTLOGOCMD"
+export PUTLOGOCMDINDEX="composite  -geometry  +180+475  $scriptdir/fmi-logo-60x30a.png"
 
 export outsuff=""
 
 
-export email="FIN-slim@haze"
-export lonrange="19.4,25."
-export latrange="59.2,61.2"
-export suitename="SWFIN"
+export email="MDA-slim_at_haze"
+export lonrange="24.5,32."
+export latrange="44.,50."
+export suitename="MDAeu"
 
 export OUTPUT_DIR=${scriptdir}/output-${suitename}
-export domainname='SWFIN'
+export domainname='MDA'

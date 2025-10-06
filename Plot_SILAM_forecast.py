@@ -126,7 +126,9 @@ def getNC(URL, ncfile):
 # 
 gradsscripthead="""
    set gxout shaded
-   set mpdset meps2020-rll
+   set mpdset world_map
+"""
+"""
    set mpt 1 1 1 1
    set gridln off
    set mpt 2 1 5 0.5
